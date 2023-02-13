@@ -7,16 +7,15 @@ version: 2.1
 jobs:
   say-hello:
     # Specify the execution environment.Here used the local machine-runner. Installed runner on personal laptop to test it out. 
-    runner:
-      machine: true
-      resource_class: gaurav-14/msi-linux-machine
-      # Add steps to the job
-      # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-      steps:
-        - checkout
-        - run:
-            name: "Say hello"
-            command: "echo Hello, World!"
+    machine: true
+    resource_class: gaurav-14/msi-linux-machine
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - checkout
+      - run:
+          name: "Say hello"
+          command: "echo Hello, World!"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
