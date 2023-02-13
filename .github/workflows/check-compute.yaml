@@ -1,6 +1,5 @@
-# This is a basic workflow to help you get started with Actions
 
-name: CI to check compute
+name: check compute size of default github-runner
 
 # Controls when the workflow will run
 on:
@@ -10,7 +9,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  print-compute:
+  print-compute-size:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -21,10 +20,13 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world!
+        run:  echo Hello, world!
 
       # Runs a set of commands using the runners shell
-      - name: check compute size
-        run: |
-          free -mh
-          df -h
+      - name: print RAM
+        run: echo "print RAM" 
+             free -mh
+      - name: print ROM
+        run: echo "print ROM"
+             df -h
+
