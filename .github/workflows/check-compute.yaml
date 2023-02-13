@@ -3,6 +3,7 @@ name: check compute size of default github-runner
 
 # Controls when the workflow will run
 on:
+  push: test-github-actions
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
