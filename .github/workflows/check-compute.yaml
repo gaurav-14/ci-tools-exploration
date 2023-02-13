@@ -1,12 +1,16 @@
 name: CI for demo purpose
 on:
-  worklow_dispatch:
+  workflow_dispatch:
 jobs:
   echo:
     runs-on: ubuntu-latest
     name: Check default compute size
     steps: 
-    - run: echo "printing RAM: \n" 
+    - name: Print RAM
+      run: |
+           echo "printing RAM:" 
            free -mh
-    - run: echo "print ROM: \n"
-            df -h 
+    - name: Print ROM
+      run: |
+           echo "print ROM:" 
+           df -h 
