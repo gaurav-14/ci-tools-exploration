@@ -1,16 +1,19 @@
-name: CI for demo purpose
+name: Echo job using runner as a service
+
 on:
-  workflow_dispatch:
+   workflow_dispatch:
+
 jobs:
-  echo:
-    runs-on: ubuntu-latest
+
+  check-compute:
+    runs-on: ubuntu-latest    
     name: Check default compute size
     steps: 
-    - name: Print RAM
-      run: |
-           echo "printing RAM:" 
-           free -mh
-    - name: Print ROM
-      run: |
+      - name: Print RAM
+        run: |
+            echo "printing RAM:" 
+            free -mh
+      - name: Print ROM
+        run: |
            echo "print ROM:" 
            df -h 
