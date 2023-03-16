@@ -26,7 +26,13 @@ jobs:
      runs-on: ubuntu-latest
 
      steps:
+      # checkout repo containing current workflow
+       - uses: actions/checkout@v3
+         with:
+           path: main
+
       # Testing cloning another private repo in same account
        - uses: actions/checkout@v3
          with:
            repository: gaurav-14/test-submodule-ci
+           path: test_submodule
