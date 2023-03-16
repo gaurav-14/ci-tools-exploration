@@ -29,4 +29,4 @@ jobs:
       # checkout repo containing current workflow
        - uses: actions/checkout@v3
          with:
-           submodule: true
+           submodules: true
