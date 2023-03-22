@@ -50,6 +50,12 @@ jobs:
         
         - name: check for ssh-agent-socket again
           run: echo $SSH_AUTH_SOCK 
+          
+        - name: check all environment variables
+          run: env
+          
+        - name: print latest available agent location
+          run: ls -la /tmp/ssh*/** | head -1
       
      
             
