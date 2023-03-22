@@ -34,6 +34,9 @@ jobs:
            
        - name: "testing if ssh-auth-sock is updated"
          run: echo $SSH_AUTH_SOCK
+
+       - name: "Access host env variable in script"
+         run: ./example_scripts/sample_script.sh
      
             
 
