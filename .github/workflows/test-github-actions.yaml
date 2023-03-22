@@ -37,6 +37,20 @@ jobs:
 
        - name: "Access host env variable in script"
          run: ./example_scripts/sample_script.sh
+         
+  test-ssh-socket:
+      runs-on: ubuntu-latest
+        
+      steps:
+        - name: check if ssh-agent-socket exists
+          run: echo $SSH_AUTH_SOCK 
+          
+        - name: starting ssh-agent
+          run: eval "(ssh-agent -s)"
+        
+        - name: check for ssh-agent-socket again
+          run: echo $SSH_AUTH_SOCK 
+      
      
             
 
