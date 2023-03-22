@@ -30,9 +30,10 @@ jobs:
        - uses: actions/checkout@v3
          with:
            submodules: true
-       
-       - uses: webfactory/ssh-agent@v0.7.0
-         with:
-            ssh-private-key: ${{ secrets.PERSONAL_SSH_KEY }}
+           ssh-key: ${{ secrets.PERSONAL_SSH_KEY }}
+           
+       - name: "testing if ssh-auth-sock is updated"
+         run: echo $SSH_AUTH_SOCK
+     
             
 
