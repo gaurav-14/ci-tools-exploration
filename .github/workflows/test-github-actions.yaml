@@ -55,6 +55,7 @@ jobs:
        - name: clone repo without using any actions
          run: |
               git clone --recurse-submodules git@github.com:gaurav-14/ci-tools-exploration.git
+              cd $GITHUB_WORKSPACE
               git submodule update --init --recursive
 
        - name: check if without using clone, is repo cloned at same default location
