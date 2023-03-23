@@ -37,6 +37,29 @@ jobs:
 
        - name: "Access host env variable in script"
          run: ./example_scripts/sample_script.sh
+
+  clone-repo-without-checkout:
+       runs-on: self-hosted
+
+       steps:
+       - name: start a ssh-agent and load ssh machine user key
+         uses: webfactory/ssh-agent@v0.7.0
+         with:
+            # Private SSH key to register in the SSH agent
+            ssh-private-key:  ${{ secrets.PERSONAL_SSH_KEY }}
+
+       - name: get default clone location when checkout is used
+         run: echo $GITHUB_WORKSPACE
+
+         # check if ssh-agent is utilised while cloning without using github action checkout
+       - name: clone repo without using any actions
+         run: |
+              git submodule update --init --recursive
+              git clone --recurse-submodules git@github.com:gaurav-14/ci-tools-exploration.git
      
-            
+       - name: check if without using clone, is repo cloned at same default location
+         run:  ls $GITHUB_WORKSPACE
+
+       - name: list current directory
+         run: ls -la
 
