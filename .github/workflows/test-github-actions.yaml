@@ -56,10 +56,31 @@ jobs:
          run: |
               git submodule update --init --recursive
               git clone --recurse-submodules git@github.com:gaurav-14/ci-tools-exploration.git
-     
-       - name: check if without using clone, is repo cloned at same default location
-         run:  ls $GITHUB_WORKSPACE
+         
+  test-ssh-socket:
+      runs-on: ubuntu-latest
+        
+      steps:
+        - name: check if ssh-agent-socket exists
+          run: echo $SSH_AUTH_SOCK 
+          
+        - name: starting ssh-agent
+          uses: webfactory/ssh-agent@v0.7.0
+          with: 
+            ssh-private-key: ${{ secrets.PERSONAL_SSH_KEY }}
+        
+        - name: check for ssh-agent-socket again
+          run: echo $SSH_AUTH_SOCK 
+          
+        - name: check all environment variables
+          run: env
+          
+        - name: print latest available agent location
+          run: ls -la /tmp/ssh*/** | head -1
+      
+        - name: check if without using clone, is repo cloned at same default location
+          run:  ls $GITHUB_WORKSPACE
 
-       - name: list current directory
-         run: ls -la
+        - name: list current directory
+          run: ls -la
 
