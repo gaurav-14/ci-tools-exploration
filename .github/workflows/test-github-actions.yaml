@@ -84,3 +84,19 @@ jobs:
         - name: print latest available agent location
           run: ls -la /tmp/ssh*/** | head -1    
 
+  clone-using-ssh-agent-and-checkout:
+     runs-on: ubuntu-latest
+
+     steps:
+       - name: start a ssh-agent and load ssh machine user key
+         uses: webfactory/ssh-agent@v0.7.0
+         with:
+            # Private SSH key to register in the SSH agent
+            ssh-private-key:  ${{ secrets.PERSONAL_SSH_KEY }}
+
+       # checkout repo containing current workflow
+       - uses: actions/checkout@v3
+         with:
+           submodules: recursive
+
+           
