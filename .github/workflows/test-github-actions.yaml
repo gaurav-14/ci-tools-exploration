@@ -94,9 +94,21 @@ jobs:
             # Private SSH key to register in the SSH agent
             ssh-private-key:  ${{ secrets.PERSONAL_SSH_KEY }}
 
+         # check $GITHUB_WORKSPACE content before checking out
+       - name: debug 
+         run: |
+              ls -la 
+
        # checkout repo containing current workflow
        - uses: actions/checkout@v3
          with:
            submodules: recursive
+
+         # check $GITHUB_WORKSPACE content after checking out
+       - name: debug 
+         run: |
+              ls -la 
+       
+       
 
            
