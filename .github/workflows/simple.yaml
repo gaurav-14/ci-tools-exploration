@@ -1,4 +1,4 @@
-name: Simple workflow to include manual dispatch 
+name: Simple workflow branched out from main 
 
 on:
   workflow_dispatch:
@@ -10,10 +10,4 @@ jobs:
   
    steps: 
      - run: echo "hello world!"
-
      - run: echo "This workflow is from branch:" ${GITHUB_REF#refs/heads/}
-
-       #- name: "Dispatch manual trigger to another repository"
-       #run: gh workflow run test-github-actions.yaml --ref test-github-actions
-       #env:
-       #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
