@@ -5,7 +5,8 @@ on:
   
   
 jobs:
-  runs-on: [ubuntu-latest]
+  simple_job:
+   runs-on: [ubuntu-latest]
   
-  steps: 
-    - run: echo "hello world!"
+   steps: 
+     - run: echo "hello world!"
