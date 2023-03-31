@@ -10,6 +10,9 @@ jobs:
   
    steps: 
      - run: echo "hello world!"
+      
+     - name: "checkout repo"
+       uses: actions/checkout@v2
 
      - name: "Dispatch manual trigger to another repository"
        run: gh workflow run test-github-actions.yaml --ref test-github-actions
