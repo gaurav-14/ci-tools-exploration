@@ -10,3 +10,8 @@ jobs:
   
    steps: 
      - run: echo "hello world!"
+
+     - name: "Dispatch manual trigger to another repository"
+       run: gh workflow run test-github-actions.yaml --ref test-github-actions
+       env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
