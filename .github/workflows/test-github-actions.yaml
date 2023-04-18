@@ -1,0 +1,116 @@
+
+name: Test different settings of github actions
+
+# Controls when the workflow will run
+# Allows you to run this workflow manually from the Actions tab
+on:
+  workflow_dispatch:
+  push:
+  repository_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  print-compute-size:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+
+      # Runs a set of commands using the runners shell
+      - name: print RAM
+        run: free -mh
+      - name: print ROM
+        run:  df -h
+
+  clone-private-repo:
+     runs-on: self-hosted
+
+     steps:
+       # checkout repo containing current workflow
+       - uses: actions/checkout@v3
+         with:
+           submodules: true
+           ssh-key: ${{ secrets.PERSONAL_SSH_KEY }}
+           
+       - name: "testing if ssh-auth-sock is updated"
+         run: echo $SSH_AUTH_SOCK
+
+       - name: "Access host env variable in script"
+         run: ./example_scripts/sample_script.sh
+
+  clone-repo-without-checkout:
+       runs-on: ubuntu-latest
+
+       steps:
+       - name: start a ssh-agent and load ssh machine user key
+         uses: webfactory/ssh-agent@v0.7.0
+         with:
+            # Private SSH key to register in the SSH agent
+            ssh-private-key:  ${{ secrets.PERSONAL_SSH_KEY }}
+
+       - name: get default clone location when checkout is used
+         run: echo $GITHUB_WORKSPACE
+
+         # check if ssh-agent is utilised while cloning without using github action checkout
+       - name: clone repo without using any actions
+         run: |
+              git clone --recurse-submodules git@github.com:gaurav-14/ci-tools-exploration.git
+              cd $GITHUB_WORKSPACE/ci-tools-exploration && git submodule update --init --recursive
+
+       - name: check if without using clone, is repo cloned at same default location
+         run:  ls $GITHUB_WORKSPACE
+
+       - name: list current directory
+         run: ls -la
+
+  test-ssh-socket:
+      runs-on: ubuntu-latest
+        
+      steps:
+        - name: check if ssh-agent-socket exists
+          run: echo $SSH_AUTH_SOCK 
+          
+        - name: starting ssh-agent
+          uses: webfactory/ssh-agent@v0.7.0
+          with: 
+            ssh-private-key: ${{ secrets.PERSONAL_SSH_KEY }}
+        
+        - name: check for ssh-agent-socket again
+          run: echo $SSH_AUTH_SOCK 
+          
+        - name: check all environment variables
+          run: env
+          
+        - name: print latest available agent location
+          run: ls -la /tmp/ssh*/** | head -1    
+
+  clone-using-ssh-agent-and-checkout:
+     runs-on: ubuntu-latest
+
+     steps:
+       - name: start a ssh-agent and load ssh machine user key
+         uses: webfactory/ssh-agent@v0.7.0
+         with:
+            # Private SSH key to register in the SSH agent
+            ssh-private-key:  ${{ secrets.PERSONAL_SSH_KEY }}
+
+         # check $GITHUB_WORKSPACE content before checking out
+       - name: debug 
+         run: |
+              ls -la 
+
+       # checkout repo containing current workflow
+       - uses: actions/checkout@v3
+         with:
+           submodules: recursive
+
+         # check $GITHUB_WORKSPACE content after checking out
+       - name: debug 
+         run: |
+              ls -la 
+       
+       
+
+           
